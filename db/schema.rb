@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_16_152021) do
+ActiveRecord::Schema.define(version: 2018_08_17_100749) do
 
   create_table "bookings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.date "checkin"
@@ -64,7 +64,6 @@ ActiveRecord::Schema.define(version: 2018_08_16_152021) do
   end
 
   create_table "rooms", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "room_type"
     t.boolean "status"
     t.decimal "cost", precision: 8, scale: 2
     t.text "details"
@@ -74,7 +73,9 @@ ActiveRecord::Schema.define(version: 2018_08_16_152021) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "hotel_id"
+    t.bigint "room_type_id"
     t.index ["hotel_id"], name: "index_rooms_on_hotel_id"
+    t.index ["room_type_id"], name: "index_rooms_on_room_type_id"
   end
 
   add_foreign_key "bookings", "hotels"
@@ -83,4 +84,5 @@ ActiveRecord::Schema.define(version: 2018_08_16_152021) do
   add_foreign_key "payments", "bookings"
   add_foreign_key "room_types", "hotels"
   add_foreign_key "rooms", "hotels"
+  add_foreign_key "rooms", "room_types"
 end

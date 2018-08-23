@@ -2,16 +2,19 @@ class RoomsController < ApplicationController
   before_action :set_room, only: [:show, :update, :destroy]
 
     def index
-      @rooms = Room.all
+      @rooms = Hotel.find(params[:hotel_id]).rooms
       json_response(@rooms)
     end
 
     def create
-      @room = Room.create!(room_params)
+      @hotel = Hotel.find(params[:hotel_id])
+      @room = @hotel.rooms.build
+      @room.update(room_params)
       json_response(@room, :created)
     end
 
     def show
+      @room = Hotel.find(params(:hotel_id)).rooms.find(params[:id])
       json_response(@room)
     end
 

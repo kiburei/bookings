@@ -1,5 +1,5 @@
 class GroupsController < ApplicationController
-  before_action :set_group, only: [:show, :update, :destroy]
+  before_action :set_group, only: [:add_hotel, :show_hotels, :show, :update, :destroy]
 
     def index
       @groups = Group.all
@@ -9,6 +9,17 @@ class GroupsController < ApplicationController
     def create
       @group = Group.create!(group_params)
       json_response(@group, :created)
+    end
+
+    def add_hotel
+      @hotel = @group.hotels.build(hotel_params)
+      @hotel.save
+      json_response(@hotel, :created)
+    end
+
+    def show_hotels
+      @hotels = @group.hotels
+      json_response(@hotels)
     end
 
     def show
@@ -33,5 +44,9 @@ class GroupsController < ApplicationController
 
     def group_params
       params.permit(:name, :address, :location)
+    end
+
+    def hotel_params
+      params.permit(:name, :Address, :location)
     end
 end

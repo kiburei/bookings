@@ -1,9 +1,25 @@
 class HotelsController < ApplicationController
-  before_action :set_hotel, only: [:show, :update, :destroy]
+  before_action :set_hotel, only: [:hotel_group, :add_room, :add_room_type, :room_types, :show, :update, :destroy]
 
     def index
       @hotels = Hotel.all
       json_response(@hotels)
+    end
+
+    def hotel_group
+      @group = @hotel.group
+      json_response(@group)
+    end
+
+    def room_types
+      @room_types = @hotel.room_types
+      json_response(@room_types)
+    end
+
+    def add_room_type
+      @room_type = @hotel.room_types.build
+      @room_type.update(room_type_params)
+      json_response(@room_type, :created)
     end
 
     def create
@@ -33,5 +49,13 @@ class HotelsController < ApplicationController
 
     def hotel_params
       params.permit(:name, :Address, :location)
+    end
+
+    def room_params
+      params.permit(:status, :cost, :details, :capacity, :beds, :baths)
+    end
+
+    def room_type_params
+      params.permit(:name)
     end
 end

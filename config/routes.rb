@@ -1,8 +1,19 @@
 Rails.application.routes.draw do
-  resources :groups
+  resources :groups do
+    collection do
+      post ':id/new/hotel', :action => 'add_hotel'
+      get ':id/hotels', :action => 'show_hotels'
+    end
+  end
+  resources :room_types
   resources :hotels do
-    resources :room_types
+    collection do
+      get ':id/hotel/group', :action => 'hotel_group'
+    end
     resources :rooms
+    collection do
+      get ':id/room_types', :action => 'room_types'
+    end
   end
   resources :bookings do
     resources :payments
