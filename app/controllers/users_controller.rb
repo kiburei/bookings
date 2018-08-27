@@ -1,4 +1,10 @@
 class UsersController < ApplicationController
+  skip_before_action :authenticate_request, only: %i[login register]
+
+  def login
+    authenticate params[:email], params[:password]
+  end
+
   def register
     @user = User.create(user_params)
    if @user.save
@@ -11,11 +17,20 @@ class UsersController < ApplicationController
 
   private
 
+  def authenticate(email, password)
+    command = AuthenticateUser.call(email, password)
+
+    if command.success?
+      render json: {
+        access_token: command.result,
+        message: 'Login Successful'
+      }
+    else
+      render json: { error: command.errors }, status: :unauthorized
+    end
+   end
+
   def user_params
-    params.permit(
-      :first_name,
-      :email,
-      :password
-    )
+    params.permit(:first_name, :email, :password)
   end
 end

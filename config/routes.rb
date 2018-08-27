@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   # User Auth
   post 'auth/register', to: 'users#register'
-  
+  post 'auth/login', to: 'users#login'
+
   resources :groups do
     collection do
       post ':id/new/hotel', :action => 'add_hotel'

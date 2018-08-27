@@ -7,7 +7,10 @@ ruby '2.5.1'
 gem 'bcrypt', '~> 3.1.7'
 # use CORS
 gem 'rack-cors', :require => 'rack/cors'
-
+# JswonWebTokens
+gem 'jwt'
+# validate credentials
+gem 'simple_command'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.1'
 # Use mysql as the database for Active Record
