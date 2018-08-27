@@ -10,12 +10,13 @@ Rails.application.routes.draw do
     collection do
       get ':id/hotel/group', :action => 'hotel_group'
     end
-    resources :rooms
+    resources :rooms do
+      resources :bookings do
+        resources :payments
+      end
+    end
     collection do
       get ':id/room_types', :action => 'room_types'
     end
-  end
-  resources :bookings do
-    resources :payments
   end
 end

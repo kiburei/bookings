@@ -1,5 +1,6 @@
 class PaymentsController < ApplicationController
   before_action :set_payment, only: [:show, :update, :destroy]
+  before_action :set_booking, only: [:create]
 
     def index
       @payments = Payment.all
@@ -7,7 +8,8 @@ class PaymentsController < ApplicationController
     end
 
     def create
-      @payment = Payment.create!(payment_params)
+      @payment = @booking.payments.build(payment_params)
+      @payment.save
       json_response(@payment, :created)
     end
 
@@ -26,6 +28,10 @@ class PaymentsController < ApplicationController
     end
 
     private
+
+    def set_booking
+      @booking = Booking.find(params[:booking_id])
+    end
 
     def set_payment
       @payment = Payment.find(params[:id])

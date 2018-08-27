@@ -14,7 +14,6 @@ class RoomsController < ApplicationController
     end
 
     def show
-      @room = Hotel.find(params(:hotel_id)).rooms.find(params[:id])
       json_response(@room)
     end
 

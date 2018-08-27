@@ -1,14 +1,17 @@
 class BookingsController < ApplicationController
   before_action :set_booking, only: [:show, :update, :destroy]
+  before_action :set_room, only: [:index, :create, :show]
 
     def index
-      @bookings = Booking.all
+      @bookings = @room.booking
       json_response(@bookings)
     end
 
     def create
-      @booking = Booking.create!(booking_params)
-      json_response(@booking, :created)
+      @room.booking = Booking.new(booking_params)
+      @room.update(status: "Booked")
+      @room.booking.save
+      json_response(@room.booking, :created)
     end
 
     def show
@@ -26,6 +29,10 @@ class BookingsController < ApplicationController
     end
 
     private
+
+    def set_room
+      @room = Room.find(params[:room_id])
+    end
 
     def set_booking
       @booking = Booking.find(params[:id])
