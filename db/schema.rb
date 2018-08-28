@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_28_102916) do
+ActiveRecord::Schema.define(version: 2018_08_28_130252) do
 
   create_table "booking_details", primary_key: "detail_id", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.date "checkin"
@@ -18,11 +18,13 @@ ActiveRecord::Schema.define(version: 2018_08_28_102916) do
     t.decimal "amount", precision: 8, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "booking_ref"
-    t.index ["booking_ref"], name: "index_booking_details_on_booking_ref"
+    t.bigint "booking_id"
+    t.bigint "room_id"
+    t.index ["booking_id"], name: "index_booking_details_on_booking_id"
+    t.index ["room_id"], name: "index_booking_details_on_room_id"
   end
 
-  create_table "bookings", primary_key: "booking_ref", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "bookings", primary_key: "booking_id", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.date "booking_date"
@@ -47,7 +49,7 @@ ActiveRecord::Schema.define(version: 2018_08_28_102916) do
     t.index ["group_id"], name: "index_hotels_on_group_id"
   end
 
-  create_table "payments", primary_key: "transaction_ref", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "payments", primary_key: "transaction_id", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.decimal "amount_paid", precision: 8, scale: 2
     t.string "paid_by"
     t.string "paid_by_contact"
@@ -72,7 +74,7 @@ ActiveRecord::Schema.define(version: 2018_08_28_102916) do
   end
 
   create_table "rooms", primary_key: "room_id", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "status"
+    t.string "status", default: "Vacant"
     t.decimal "cost", precision: 8, scale: 2
     t.text "details"
     t.integer "capacity"
@@ -82,6 +84,7 @@ ActiveRecord::Schema.define(version: 2018_08_28_102916) do
     t.datetime "updated_at", null: false
     t.bigint "hotel_id"
     t.bigint "room_type_id"
+    t.string "room_number"
     t.index ["hotel_id"], name: "index_rooms_on_hotel_id"
     t.index ["room_type_id"], name: "index_rooms_on_room_type_id"
   end
@@ -95,7 +98,7 @@ ActiveRecord::Schema.define(version: 2018_08_28_102916) do
   end
 
   add_foreign_key "hotels", "groups", primary_key: "group_id"
-  add_foreign_key "payments", "bookings", column: "booking_ref", primary_key: "booking_ref"
+  add_foreign_key "payments", "bookings", column: "booking_ref", primary_key: "booking_id"
   add_foreign_key "rooms", "hotels", primary_key: "hotel_id"
   add_foreign_key "rooms", "room_types", primary_key: "room_type_id"
 end

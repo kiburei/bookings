@@ -8,9 +8,10 @@ class RoomsController < ApplicationController
 
     def create
       @hotel = Hotel.find(params[:hotel_id])
-      @room = @hotel.rooms.build
-      @room.update(room_params)
-      json_response(@room, :created)
+      @room = @hotel.rooms.build(room_params)
+      if @room.save!
+        json_response(@room, :created)
+      end
     end
 
     def show
@@ -34,6 +35,6 @@ class RoomsController < ApplicationController
     end
 
     def room_params
-      params.permit(:status, :cost, :details, :capacity, :beds, :baths)
+      params.permit(:status, :cost, :details, :capacity, :beds, :baths, :room_type_id, :room_number)
     end
 end
