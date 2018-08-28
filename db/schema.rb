@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_28_090051) do
+ActiveRecord::Schema.define(version: 2018_08_28_102916) do
+
+  create_table "booking_details", primary_key: "detail_id", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.date "checkin"
+    t.date "checkout"
+    t.decimal "amount", precision: 8, scale: 2
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "booking_ref"
+    t.index ["booking_ref"], name: "index_booking_details_on_booking_ref"
+  end
 
   create_table "bookings", primary_key: "booking_ref", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -45,8 +55,8 @@ ActiveRecord::Schema.define(version: 2018_08_28_090051) do
     t.date "date_paid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "booking_ref_id"
-    t.index ["booking_ref_id"], name: "index_payments_on_booking_ref_id"
+    t.bigint "booking_ref"
+    t.index ["booking_ref"], name: "index_payments_on_booking_ref"
   end
 
   create_table "roles", primary_key: "role_id", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -59,8 +69,6 @@ ActiveRecord::Schema.define(version: 2018_08_28_090051) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "hotel_id"
-    t.index ["hotel_id"], name: "index_room_types_on_hotel_id"
   end
 
   create_table "rooms", primary_key: "room_id", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -74,8 +82,6 @@ ActiveRecord::Schema.define(version: 2018_08_28_090051) do
     t.datetime "updated_at", null: false
     t.bigint "hotel_id"
     t.bigint "room_type_id"
-    t.bigint "booking_id"
-    t.index ["booking_id"], name: "index_rooms_on_booking_id"
     t.index ["hotel_id"], name: "index_rooms_on_hotel_id"
     t.index ["room_type_id"], name: "index_rooms_on_room_type_id"
   end
@@ -89,8 +95,7 @@ ActiveRecord::Schema.define(version: 2018_08_28_090051) do
   end
 
   add_foreign_key "hotels", "groups", primary_key: "group_id"
-  add_foreign_key "room_types", "hotels", primary_key: "hotel_id"
-  add_foreign_key "rooms", "bookings", primary_key: "booking_ref"
+  add_foreign_key "payments", "bookings", column: "booking_ref", primary_key: "booking_ref"
   add_foreign_key "rooms", "hotels", primary_key: "hotel_id"
   add_foreign_key "rooms", "room_types", primary_key: "room_type_id"
 end
