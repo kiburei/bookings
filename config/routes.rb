@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     resources :rooms do
       resources :bookings do
         resources :payments
+        resources :booking_details
       end
     end
     collection do

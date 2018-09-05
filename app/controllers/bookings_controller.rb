@@ -28,10 +28,10 @@ class BookingsController < ApplicationController
     private
 
     def set_booking
-      @booking = Booking.find(params[:booking_ref])
+      @booking = Booking.find(params[:id])
     end
 
     def booking_params
-      params.permit(:amount, :booking_date)
+      params.permit(:amount)
     end
 end
