@@ -32,6 +32,6 @@ class RoomTypesController < ApplicationController
     end
 
     def room_type_params
-      params.permit(:name, :charge, :baths, :beds, :occupancy, :description)
+      params.permit(:name, :charge, :baths, :beds, :occupancy, :description, :hotel_id)
     end
 end
