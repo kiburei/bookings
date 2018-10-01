@@ -15,6 +15,11 @@ class UsersController < ApplicationController
    end
   end
 
+  def users
+    @users = User.all
+    json_response(@users)
+  end
+
   private
 
   def authenticate(email, password)

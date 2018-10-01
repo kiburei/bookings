@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   # User Auth
   post 'auth/register', to: 'users#register'
   post 'auth/login', to: 'users#login'
+  get '/users', to: 'users#users'
 
   resources :groups do
     collection do
