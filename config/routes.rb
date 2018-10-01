@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   # User Auth
   post 'auth/register', to: 'users#register'
   post 'auth/login', to: 'users#login'
-  get '/users', to: 'users#users'
+  get '/users', to: 'users#user'
+
+  get '/roomtypes', to: 'room_types#all_room_types'
 
   resources :groups do
     collection do
@@ -11,18 +13,18 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :room_types
 
   resources :hotels do
+      resources :room_types do
+      end
     collection do
       get ':id/hotel/group', :action => 'hotel_group'
     end
-    resources :rooms do
-      resources :bookings do
+    resources :bookings do
         resources :payments
         resources :booking_details
       end
-    end
+    resources :rooms
     collection do
       get ':id/room_types', :action => 'room_types'
     end

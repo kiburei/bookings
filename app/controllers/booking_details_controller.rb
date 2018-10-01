@@ -1,4 +1,4 @@
-class BookingDetailDetailsController < ApplicationController
+class BookingDetailsController < ApplicationController
   before_action :set_booking_detail, only: [:show, :update, :destroy]
   before_action :set_booking, only: [:create]
 
@@ -8,7 +8,7 @@ class BookingDetailDetailsController < ApplicationController
     end
 
     def create
-      @booking.booking_details = BookingDetail.create!(booking_detail_params)
+      @booking_details = @booking.booking_details.create!(booking_detail_params)
       json_response(@booking.booking_details, :created)
     end
 
@@ -37,6 +37,6 @@ class BookingDetailDetailsController < ApplicationController
     end
 
     def booking_detail_params
-      params.permit(:checkin, :checkout, :amount)
+      params.permit(:checkin, :checkout, :amount, :room_id)
     end
 end
