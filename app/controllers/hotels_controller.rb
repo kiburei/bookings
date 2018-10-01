@@ -24,7 +24,6 @@ class HotelsController < ApplicationController
 
     def create
       @hotel = Hotel.create!(hotel_params)
-      @hotel.update(contact: params[:contact])
       json_response(@hotel, :created)
     end
 
@@ -49,11 +48,11 @@ class HotelsController < ApplicationController
     end
 
     def hotel_params
-      params.permit(:name, :Address, :location, :contact)
+      params.require(:hotel).permit(:name, :Address, :location, :contact)
     end
 
     def room_params
-      params.permit(:status, :cost, :details, :capacity, :beds, :baths)
+      params.require(:room).permit(:status, :cost, :details, :capacity, :beds, :baths)
     end
 
     def room_type_params
