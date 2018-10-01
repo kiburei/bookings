@@ -24,6 +24,7 @@ class HotelsController < ApplicationController
 
     def create
       @hotel = Hotel.create!(hotel_params)
+      @hotel.update(contact: params[:contact])
       json_response(@hotel, :created)
     end
 
