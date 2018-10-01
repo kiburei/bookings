@@ -48,7 +48,7 @@ class HotelsController < ApplicationController
     end
 
     def hotel_params
-      params.permit(:name, :Address, :location)
+      params.permit(:name, :Address, :location, :contact)
     end
 
     def room_params
