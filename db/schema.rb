@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_01_130342) do
+ActiveRecord::Schema.define(version: 2018_10_01_131129) do
 
   create_table "booking_details", primary_key: "detail_id", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.date "checkin"
@@ -76,6 +76,8 @@ ActiveRecord::Schema.define(version: 2018_10_01_130342) do
     t.integer "beds"
     t.integer "baths"
     t.string "description"
+    t.bigint "hotel_id"
+    t.index ["hotel_id"], name: "index_room_types_on_hotel_id"
   end
 
   create_table "rooms", primary_key: "room_id", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
