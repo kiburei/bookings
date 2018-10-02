@@ -37,6 +37,6 @@ class BookingDetailsController < ApplicationController
     end
 
     def booking_detail_params
-      params.permit(:checkin, :checkout, :amount, :room_id)
+      params.permit(:checkin, :checkout, :amount, :room_id, :name, :email, :occupancy)
     end
 end

@@ -8,7 +8,7 @@ class RoomsController < ApplicationController
 
     def all_rooms
       @rooms = Room.all
-      json_response(@rooms)
+      json_response(@rooms.room_types)
     end
 
     def create
