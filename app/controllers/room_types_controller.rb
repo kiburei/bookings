@@ -1,9 +1,9 @@
 class RoomTypesController < ApplicationController
   before_action :set_room_type, only: [:show, :update, :destroy]
-  before_action :set_hotel, only: [:create]
+  before_action :set_hotel, only: [:index, :create]
 
     def index
-      @room_types = RoomType.all
+      @room_types = @hotel.room_types
       json_response(@room_types)
     end
 
