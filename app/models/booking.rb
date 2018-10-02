@@ -1,5 +1,5 @@
 class Booking < ApplicationRecord
-  belongs_to :user
+  # belongs_to :user
   has_many :payments
   has_many :booking_details
 
