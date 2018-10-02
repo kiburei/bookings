@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   # User Auth
   post 'auth/register', to: 'users#register'
   post 'auth/login', to: 'users#login'
-  get '/users', to: 'users#user'
+  get '/users', to: 'users#users'
 
   get '/roomtypes', to: 'room_types#all_room_types'
   get '/rooms', to: 'rooms#all_rooms'
