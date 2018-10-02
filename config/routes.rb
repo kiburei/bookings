@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get '/users', to: 'users#user'
 
   get '/roomtypes', to: 'room_types#all_room_types'
+  get '/rooms', to: 'rooms#all_rooms'
 
   resources :groups do
     collection do

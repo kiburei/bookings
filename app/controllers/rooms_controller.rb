@@ -6,6 +6,11 @@ class RoomsController < ApplicationController
       json_response(@rooms)
     end
 
+    def all_rooms
+      @rooms = Room.all
+      json_response(@rooms)
+    end
+
     def create
       @hotel = Hotel.find(params[:hotel_id])
       @room = @hotel.rooms.build(room_params)
